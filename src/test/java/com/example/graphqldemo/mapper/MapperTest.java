@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @ExtendWith(SpringExtension.class) // JUnit5
-@MybatisTest // @Autowired 동작
+@MybatisTest // setup test components for testing pure MyBatis component. @Autowired 동작
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE) // Datasource 연결
 class MapperTest {
 
