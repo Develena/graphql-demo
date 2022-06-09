@@ -16,6 +16,7 @@ public class GraphQLDataFetchers {
     private final DepartmentMapper departmentMapper;
     private final SalaryMapper salaryMapper;
 
+
     // 의존성 주입
     public GraphQLDataFetchers(EmployeeMapper employeeMapper
             , TitleMapper titleMapper
@@ -37,7 +38,7 @@ public class GraphQLDataFetchers {
 
 
     public DataFetcher getEmployeeByEmpNo() {
-
+        System.out.println("getEmployeeByEmpNo called...");
         return dataFetchingEnvironment -> {
             // DataFetching Environment로부터 스키마에 작성된 파라미터를 불러올 수 있다.
             int empNo = Integer.parseInt(dataFetchingEnvironment.getArgument("empNo"));
@@ -53,6 +54,7 @@ public class GraphQLDataFetchers {
                     .toDate(employeeInfo.getDeptToDate())
                     .build();
 
+            System.out.println("getEmployeeByEmpNo return Employee...");
             // 최종 리턴인 EmployeeDetail 스키마 객체를 생성
             return EmployeeDetail.builder()
                     .empNo(empNo)
@@ -71,14 +73,18 @@ public class GraphQLDataFetchers {
 
     // 간단한 쿼리 조회 예시
     public DataFetcher getDepartments() {
+        System.out.println("getDepartments called...");
         return dataFetchingEnvironment -> {
+            System.out.println("getDepartments return Departments...");
             return departmentMapper.selectAllDepartments();
         };
     }
 
     // 간단한 쿼리 조회 예시
     public DataFetcher getTitles() {
+        System.out.println("getTitles called...");
         return dataFetchingEnvironment -> {
+            System.out.println("getTitles return Titles...");
             return titleMapper.selectAllTitles();
         };
     }

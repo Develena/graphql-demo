@@ -2,7 +2,7 @@ type Query {
 #	employees: [EmployeeDetail]
 	employeeByEmpNo(empNo: ID): EmployeeDetail,
 	departments: [Department],
-	titles: [Title],
+	titles: [Title]
 }
 
 type EmployeeDetail {
