@@ -59,7 +59,7 @@ MyBatis 단위 테스트를 위한 의존성 추가 : `mybatis-spring-boot-start
 mybatis-spring-boot-starter-test 더보기 -> [Introduction](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-test-autoconfigure/#Using_MybatisTest)
 
 
-### GraphQL 튜토리얼 따라하기
+### 1) GraphQL 튜토리얼 따라하기 - DataFetcher from graphql-java
 튜토리얼 [Tutorial with Spring Boot | GraphQL Java](https://www.graphql-java.com/tutorials/getting-started-with-spring-boot/)
 
 #### 의존성 추가(Gradle)
@@ -197,7 +197,7 @@ public void init() throws IOException {
 
 </aside>
 
-### `GraphQLDataFetchers` 생성하기
+#### `GraphQLDataFetchers` 생성하기
 
 - literally, 말 그대로 GraphQL 스키마와 Data를 Fetching 하는 클래스
 - 필요한 의존성 주입을 받는다.
@@ -260,8 +260,22 @@ public void init() throws IOException {
         };
     }
     ```
+
+### 2) QueryResolver from graphql-java-tools
+#### 의존성 추가(Gradle)
+```groovy
+dependencies{
+    ...
+    implementation 'com.graphql-java:graphql-java-tools:5.2.4' // GraphQL Java
+    implementation 'com.graphql-java:graphql-spring-boot-starter:5.0.2' // GraphQL spring
+    ...
+}
+```
+#### GraphQLResolver 작성하기 (진행중)
+
+
   
-#### 테스트하기 : Graphql Playground
+### 테스트하기 : Graphql Playground
 <aside>
 💡 Graphql Playground는 graphql 쿼리 테스트 툴인데,
 1. 데스크탑에 응용 프로그램으로 설치하거나

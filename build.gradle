@@ -20,8 +20,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Web
-    implementation 'com.graphql-java:graphql-java:18.0' // GraphQL Java
-    implementation 'com.graphql-java:graphql-java-spring-boot-starter-webmvc:2.0' // GraphQL spring
+    implementation 'com.graphql-java:graphql-java-tools:5.2.4' // GraphQL Java
+    implementation 'com.graphql-java:graphql-spring-boot-starter:5.0.2' // GraphQL spring
     implementation 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0' // Graphql Playground
     implementation 'com.google.guava:guava:31.1-android' // Optional
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2' // MyBatis
