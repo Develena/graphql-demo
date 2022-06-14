@@ -3,7 +3,7 @@ Spring Boot + GraphQL + Mybatis(MariaDB)
 
 ## 실습 환경
 0. Mariadb 테스트 데이터 준비하기
-    
+
    git clone https://github.com/datacharmer/test_db.git
 
 1. Docker로 MariaDB 설치하기
@@ -22,11 +22,11 @@ Spring Boot + GraphQL + Mybatis(MariaDB)
    ```
 3. dump 데이터 생성
 
-   1) `cd test_db` : 실행할 sql 데이터 디렉토리로 이동
-   
-   2) `source` 명령어로 데이터 생성 : `source employees.sql`
+    1) `cd test_db` : 실행할 sql 데이터 디렉토리로 이동
 
-   3) 데이터 조회해보기
+    2) `source` 명령어로 데이터 생성 : `source employees.sql`
+
+    3) 데이터 조회해보기
 
 ## Spring Boot 시작하기(with Mybatis, GraphQL)
 ### 프로젝트 생성하기
@@ -59,7 +59,7 @@ MyBatis 단위 테스트를 위한 의존성 추가 : `mybatis-spring-boot-start
 mybatis-spring-boot-starter-test 더보기 -> [Introduction](http://mybatis.org/spring-boot-starter/mybatis-spring-boot-test-autoconfigure/#Using_MybatisTest)
 
 
-### 1) GraphQL 튜토리얼 따라하기 - DataFetcher from graphql-java
+### GraphQL 튜토리얼 따라하기 - DataFetcher from graphql-java
 튜토리얼 [Tutorial with Spring Boot | GraphQL Java](https://www.graphql-java.com/tutorials/getting-started-with-spring-boot/)
 
 #### 의존성 추가(Gradle)
@@ -159,32 +159,32 @@ public void init() throws IOException {
 }
 ```
 - 의존관계 주입이 이루어진 후에 초기화를 수행하기 위해 `@PostContruct` 로 init()메소드를 작성한다.
-   - SDL 파일(`schema.graphqls`)을 읽고,
-   - SDL 로부터 `GraphQLSchema`, `GraphQL` 인스턴스를 생성한다.
+    - SDL 파일(`schema.graphqls`)을 읽고,
+    - SDL 로부터 `GraphQLSchema`, `GraphQL` 인스턴스를 생성한다.
 
-     (`GraphQL`인스턴스는 메소드주입 방식으로 `bean`으로 등록된다)
-      ```java
-      @Bean
-      public GraphQL graphQL() {
-         return graphQL;
-      }
-     ```
-   - GraphQL : GraphQL Java Spring Adaptor가 `/graphql`(디폴트 경로)로 HTTP를 통한 스키마를 이용할 수 있게 하는 객체
-     - DataFetcher를 등록한다.
-      
-       DataFetcher는 SDL에 작성된 쿼리(메소드)마다 1:1로 작성되어야 한다.
+      (`GraphQL`인스턴스는 메소드주입 방식으로 `bean`으로 등록된다)
        ```java
-           private RuntimeWiring buildWiring() {
-             return RuntimeWiring.newRuntimeWiring()
-              .type(newTypeWiring("Query")
-              .dataFetcher("employeeByEmpNo", graphQLDataFetchers.getEmployeeByEmpNo()))
-              .type(newTypeWiring("Query")
-              .dataFetcher("departments", graphQLDataFetchers.getDepartments()))
-              .type(newTypeWiring("Query")
-              .dataFetcher("titles", graphQLDataFetchers.getTitles()))
-              .build();
-           }
-       ```
+       @Bean
+       public GraphQL graphQL() {
+          return graphQL;
+       }
+      ```
+    - GraphQL : GraphQL Java Spring Adaptor가 `/graphql`(디폴트 경로)로 HTTP를 통한 스키마를 이용할 수 있게 하는 객체
+        - DataFetcher를 등록한다.
+
+          DataFetcher는 SDL에 작성된 쿼리(메소드)마다 1:1로 작성되어야 한다.
+          ```java
+              private RuntimeWiring buildWiring() {
+                return RuntimeWiring.newRuntimeWiring()
+                 .type(newTypeWiring("Query")
+                 .dataFetcher("employeeByEmpNo", graphQLDataFetchers.getEmployeeByEmpNo()))
+                 .type(newTypeWiring("Query")
+                 .dataFetcher("departments", graphQLDataFetchers.getDepartments()))
+                 .type(newTypeWiring("Query")
+                 .dataFetcher("titles", graphQLDataFetchers.getTitles()))
+                 .build();
+              }
+          ```
 
 #### `DataFetchers`
 - GraphQL Java Server 구현 시의 핵심 개념.
@@ -261,20 +261,6 @@ public void init() throws IOException {
     }
     ```
 
-### 2) QueryResolver from graphql-java-tools
-#### 의존성 추가(Gradle)
-```groovy
-dependencies{
-    ...
-    implementation 'com.graphql-java:graphql-java-tools:5.2.4' // GraphQL Java
-    implementation 'com.graphql-java:graphql-spring-boot-starter:5.0.2' // GraphQL spring
-    ...
-}
-```
-#### GraphQLResolver 작성하기 (진행중)
-
-
-  
 ### 테스트하기 : Graphql Playground
 <aside>
 💡 Graphql Playground는 graphql 쿼리 테스트 툴인데,
@@ -326,3 +312,16 @@ graphql.playground.settings.editor.font-size=13
          }
     }
 }
+
+### (+)추가: Resolver 사용하여 GraphQL Server 구현하기
+#### 의존성 재설정(Gradle)
+```groovy
+dependencies{
+    ...
+    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.0.0' // GraphQL Spring
+    implementation 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0' // GraphQL Playground
+    ...
+    testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0' // GraphQL Test
+}
+```
+#### GraphQLResolver 작성하기

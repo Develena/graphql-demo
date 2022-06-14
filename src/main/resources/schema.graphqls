@@ -1,9 +1,15 @@
+schema {
+	query: Query
+}
+
 # The Root Query for the application
 type Query {
-#	employees: [EmployeeDetail]
-	employeeByEmpNo(empNo: ID): EmployeeDetail,
-	departments: [Department],
-	titles: [Title]
+	#	employees: [EmployeeDetail]
+	#	employeeByEmpNo(empNo: ID): EmployeeDetail,
+	#	departments: [Department],
+	#	titles: [Title]
+	getTitles: [Title]
+
 }
 
 type EmployeeDetail {

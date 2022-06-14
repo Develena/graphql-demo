@@ -20,9 +20,8 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Web
-    implementation 'com.graphql-java:graphql-java-tools:5.2.4' // GraphQL Java
-    implementation 'com.graphql-java:graphql-spring-boot-starter:5.0.2' // GraphQL spring
-    implementation 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0' // Graphql Playground
+    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.0.0' // GraphQL Spring
+    implementation 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0' // GraphQL Playground
     implementation 'com.google.guava:guava:31.1-android' // Optional
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2' // MyBatis
     compileOnly 'org.projectlombok:lombok' // Lombok
@@ -30,6 +29,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok' // Lombok
     testImplementation 'org.springframework.boot:spring-boot-starter-test' // Spring Boot Test
     testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:2.2.2' // MyBatis Test
+    testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0' // GraphQL Test
 }
 
 tasks.named('test') {
