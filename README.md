@@ -324,4 +324,46 @@ dependencies{
     testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.0.0' // GraphQL Test
 }
 ```
+
+#### Schema 수정
+간단한 쿼리 테스트를 위해 titles, departments 쿼리만 추가
+```GraphQL
+schema {
+    query: Query
+}
+
+# The Root Query for the application
+type Query {
+    titles: [Title],
+    departments: [Department]
+}
+```
 #### GraphQLResolver 작성하기
+Title, Department 각각 GraphQLResolver를 구현한다.
+
+메소드 명명 규칙에 따라 get이 붙지 않아도 <필드명>으로 우선찾은 뒤, 없는 경우 get을 붙여 get<필드명>이 있는지 확인하여 메서드를 매핑시킨다. 
+
+즉, titles(), getTitles() 둘 다 가능.
+
+`TitleQueryResolver.java`
+```
+  /**
+   *  Query 스키마에 해당하는 메서드를 GraphQLQueryResolver를 상속한 클래스에 작성.
+   */
+   @Component // 반드시 bean으로 등록.
+   public class TitleQueryResolver implements GraphQLQueryResolver {
+   
+        private final TitleMapper titleMapper;
+
+        public TitleQueryResolver(TitleMapper titleMapper){
+            this.titleMapper = titleMapper;
+        }
+
+        // schema.graphqls의 Title과 Java 타입의 이름이 꼭 일치하지 않아도 됨.
+        public List<Title> getTitles(){
+            return titleMapper.selectAllTitles();
+        }
+
+
+}
+```

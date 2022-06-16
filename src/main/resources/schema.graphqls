@@ -8,7 +8,8 @@ type Query {
 	#	employeeByEmpNo(empNo: ID): EmployeeDetail,
 	#	departments: [Department],
 	#	titles: [Title]
-	getTitles: [Title]
+	titles: [Title],
+	departments: [Department]
 
 }
 
