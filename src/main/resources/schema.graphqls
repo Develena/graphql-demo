@@ -9,6 +9,7 @@ type Query {
 	#	departments: [Department],
 	#	titles: [Title]
 	employees:[Employee],
+	employeeByEmpNo(empNo: ID): EmployeeInfo
 	titles: [Title],
 	departments: [Department]
 
@@ -23,17 +24,17 @@ type Employee {
 	hireDate: String
 }
 
-#type EmployeeDetail {
-#	empNo:ID!
-#	birthDate: String
-#	firstName: String
-#	lastName: String
-#	gender: Gender
-#	hireDate: String
+type EmployeeInfo {
+	empNo:ID!
+	birthDate: String
+	firstName: String
+	lastName: String
+	gender: Gender
+	hireDate: String
 #	dept: DepartmentDetail
-#	salary: Salary
+	salary: Salary
 #	title: Title
-#}
+}
 
 type Department {
 	deptNo: ID!
