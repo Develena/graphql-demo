@@ -14,8 +14,8 @@ public interface TitleMapper {
     @Select("SELECT * FROM titles")
     List<Title> selectAllTitles();
 
-    @Select("SELECT * FROM titles WHERE emp_no=#{empNo}")
-    Title selectTitleByEmpNo(@Param("empNo") int empNo);
+    @Select("SELECT * FROM titles WHERE emp_no=#{empNo} order by to_date desc limit 1")
+    Title selectCurrentTitleByEmpNo(@Param("empNo") int empNo);
 
 
 

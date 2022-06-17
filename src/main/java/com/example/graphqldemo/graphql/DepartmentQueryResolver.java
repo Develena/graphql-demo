@@ -1,7 +1,6 @@
 package com.example.graphqldemo.graphql;
 
 import com.example.graphqldemo.entity.Department;
-import com.example.graphqldemo.entity.Title;
 import com.example.graphqldemo.mapper.DepartmentMapper;
 import graphql.kickstart.tools.GraphQLQueryResolver;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DepartmentQueryResolver implements GraphQLQueryResolver {
     private final DepartmentMapper departmentMapper;
+
     public List<Department> getDepartments(){
+        System.out.println("DepartmentQueryResolver - getDepartments()");
         return departmentMapper.selectAllDepartments();
     }
 }

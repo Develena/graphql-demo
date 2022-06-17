@@ -4,10 +4,6 @@ schema {
 
 # The Root Query for the application
 type Query {
-	#	employees: [EmployeeDetail]
-	#	employeeByEmpNo(empNo: ID): EmployeeDetail,
-	#	departments: [Department],
-	#	titles: [Title]
 	employees:[Employee],
 	employeeByEmpNo(empNo: ID): EmployeeInfo
 	titles: [Title],
@@ -31,9 +27,9 @@ type EmployeeInfo {
 	lastName: String
 	gender: Gender
 	hireDate: String
-#	dept: DepartmentDetail
-	salary: Salary
-#	title: Title
+	title: Title!
+	salary: Salary!
+
 }
 
 type Department {

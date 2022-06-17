@@ -14,7 +14,7 @@ public interface SalaryMapper {
     List<Salary> selectAllSalaries();
 
     @Select("SELECT * FROM salaries WHERE emp_no=#{empNo} order by to_date desc limit 1")
-    Salary selectLastSalaryByEmpNo(@Param("empNo") int empNo);
+    Salary selectCurrentSalaryByEmpNo(@Param("empNo") int empNo);
 
 
 }
