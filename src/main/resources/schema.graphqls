@@ -8,22 +8,32 @@ type Query {
 	#	employeeByEmpNo(empNo: ID): EmployeeDetail,
 	#	departments: [Department],
 	#	titles: [Title]
+	employees:[Employee],
 	titles: [Title],
 	departments: [Department]
 
 }
 
-type EmployeeDetail {
+type Employee {
 	empNo:ID!
 	birthDate: String
 	firstName: String
 	lastName: String
 	gender: Gender
 	hireDate: String
-	dept: DepartmentDetail
-	salary: Salary
-	title: Title
 }
+
+#type EmployeeDetail {
+#	empNo:ID!
+#	birthDate: String
+#	firstName: String
+#	lastName: String
+#	gender: Gender
+#	hireDate: String
+#	dept: DepartmentDetail
+#	salary: Salary
+#	title: Title
+#}
 
 type Department {
 	deptNo: ID!
@@ -31,11 +41,11 @@ type Department {
 }
 
 # dept_emp의 정보 + dept의 부서이름
-type DepartmentDetail {
-	deptName: String!
-	fromDate: String
-	toDate: String
-}
+#type DepartmentDetail {
+#	deptName: String!
+#	fromDate: String
+#	toDate: String
+#}
 
 type Title {
 	empNo: Int!
