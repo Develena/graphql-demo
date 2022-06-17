@@ -1,10 +1,8 @@
 package com.example.graphqldemo.graphql;
 
-import com.example.graphqldemo.entity.Employee;
 import com.example.graphqldemo.entity.EmployeeInfo;
 import com.example.graphqldemo.entity.Salary;
 import com.example.graphqldemo.entity.Title;
-import com.example.graphqldemo.mapper.EmployeeMapper;
 import com.example.graphqldemo.mapper.SalaryMapper;
 import com.example.graphqldemo.mapper.TitleMapper;
 import graphql.kickstart.tools.GraphQLResolver;

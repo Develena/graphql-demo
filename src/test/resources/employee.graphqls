@@ -1,0 +1,20 @@
+query {
+    employeeByEmpNo {
+        empNo
+        birthDate
+        firstName
+        lastName
+        gender
+        hireDate
+        title {
+            title
+            fromDate
+            toDate
+        }
+        salary {
+            salary
+            fromDate
+            toDate
+        }
+    }
+}
