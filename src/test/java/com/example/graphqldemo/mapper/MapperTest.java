@@ -38,13 +38,6 @@ class MapperTest {
     }
 
     @Test
-    public void EmployeeInfo_Test(){
-        EmployeeInfo employeeInfo = employeeMapper.selectEmployeeInfoByEmpNo(10001);
-        System.out.println("emp : " + employeeInfo.toString());
-
-    }
-
-    @Test
     public void Title_Mapper_Test(){
         Assertions.assertNotNull(titleMapper.selectAllTitles());
     }

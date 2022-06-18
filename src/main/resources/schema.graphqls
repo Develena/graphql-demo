@@ -16,7 +16,7 @@ type Employee {
 	birthDate: String
 	firstName: String
 	lastName: String
-	gender: Gender
+	gender: String
 	hireDate: String
 }
 
@@ -25,7 +25,7 @@ type EmployeeInfo {
 	birthDate: String
 	firstName: String
 	lastName: String
-	gender: Gender
+	gender: String
 	hireDate: String
 	title: Title!
 	salary: Salary!
@@ -65,9 +65,9 @@ type Salary {
 	toDate: String
 }
 
-enum Gender {
-	M
-	F
-}
+#enum Gender {
+#	M
+#	F
+#}
 
 #scalar Date # Allowed values are yyyy-mm-dd

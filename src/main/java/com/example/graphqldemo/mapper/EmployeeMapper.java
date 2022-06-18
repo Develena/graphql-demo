@@ -17,5 +17,4 @@ public interface EmployeeMapper {
     @Select("SELECT * FROM employees WHERE emp_no=#{empNo}")
     Employee selectEmployeeByEmpNo(@Param("empNo") int empNo);
 
-    EmployeeInfo selectEmployeeInfoByEmpNo(int empNo);
 }

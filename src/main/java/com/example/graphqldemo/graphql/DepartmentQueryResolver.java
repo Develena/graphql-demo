@@ -13,7 +13,7 @@ import java.util.List;
 public class DepartmentQueryResolver implements GraphQLQueryResolver {
     private final DepartmentMapper departmentMapper;
 
-    public List<Department> getDepartments(){
+    public List<Department> departments(){
         System.out.println("DepartmentQueryResolver - getDepartments()");
         return departmentMapper.selectAllDepartments();
     }

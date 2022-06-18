@@ -2,17 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.graphqldemo.mapper.DepartmentMapper">
-    <select id="selectDepartmentDetailByDeptNo" resultType="DepartmentDetail">
-        SELECT
-            emp.dept_no,
-            dept.dept_name,
-            emp.from_date,
-            emp.to_date
-        FROM
-            dept_emp emp
-        INNER JOIN departments dept ON dept.dept_no = emp.dept_no
-        WHERE emp.dept_no = #{depNo}
-        AND emp.emp_no = #{empNo}
+<!--    <select id="selectDepartmentDetailByDeptNo" resultType="DepartmentDetail">-->
+<!--        SELECT-->
+<!--            emp.dept_no,-->
+<!--            dept.dept_name,-->
+<!--            emp.from_date,-->
+<!--            emp.to_date-->
+<!--        FROM-->
+<!--            dept_emp emp-->
+<!--        INNER JOIN departments dept ON dept.dept_no = emp.dept_no-->
+<!--        WHERE emp.dept_no = #{depNo}-->
+<!--        AND emp.emp_no = #{empNo}-->
 
-    </select>
+<!--    </select>-->
 </mapper>

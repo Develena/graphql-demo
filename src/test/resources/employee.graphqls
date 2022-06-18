@@ -1,5 +1,5 @@
 query {
-    employeeByEmpNo {
+    employeeByEmpNo(empNo: 10001) {
         empNo
         birthDate
         firstName

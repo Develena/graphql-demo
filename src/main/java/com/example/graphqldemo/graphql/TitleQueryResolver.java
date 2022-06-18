@@ -17,7 +17,7 @@ public class TitleQueryResolver implements GraphQLQueryResolver {
     private final TitleMapper titleMapper;
 
     // schema.graphqls의 Title과 Java 타입의 이름이 꼭 일치하지 않아도 됨.
-    public List<Title> getTitles(){
+    public List<Title> titles(){
         System.out.println("TitleQueryResolver - getTitles()");
         return titleMapper.selectAllTitles();
     }

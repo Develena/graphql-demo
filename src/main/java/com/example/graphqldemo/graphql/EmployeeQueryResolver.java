@@ -14,7 +14,7 @@ public class EmployeeQueryResolver implements GraphQLQueryResolver {
 
     private final EmployeeMapper employeeMapper;
 
-    public List<Employee> getEmployees(){
+    public List<Employee> employees(){
         System.out.println("EmployeeQueryResolver - getEmployees()");
         return employeeMapper.selectAllEmployees();
     }

@@ -3,6 +3,7 @@ package com.example.graphqldemo.graphql;
 import com.example.graphqldemo.entity.EmployeeInfo;
 import com.example.graphqldemo.entity.Salary;
 import com.example.graphqldemo.entity.Title;
+import com.example.graphqldemo.mapper.EmployeeMapper;
 import com.example.graphqldemo.mapper.SalaryMapper;
 import com.example.graphqldemo.mapper.TitleMapper;
 import graphql.kickstart.tools.GraphQLResolver;
@@ -15,20 +16,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @RequiredArgsConstructor
-public class EmployeeResolver implements GraphQLResolver<EmployeeInfo> {
+public class TitleResolver implements GraphQLResolver<EmployeeInfo> {
 
     private final TitleMapper titleMapper;
-    private final SalaryMapper salaryMapper;
 
     public Title title(EmployeeInfo emp) {
-        System.out.println("EmployeeInfo Field Resolver - getTitle()");
-        return this.titleMapper.selectCurrentTitleByEmpNo(emp.getEmpNo());
+        System.out.println("Request Title for EmployeeInfo");
+        return titleMapper.selectCurrentTitleByEmpNo(emp.getEmpNo());
     }
-
-    public Salary salary(EmployeeInfo emp) {
-        System.out.println("EmployeeInfo Field Resolver - getSalary()");
-        return this.salaryMapper.selectCurrentSalaryByEmpNo(emp.getEmpNo());
-    }
-
 
 }
