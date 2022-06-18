@@ -326,7 +326,10 @@ dependencies{
 ```
 
 #### Schema 수정
-간단한 쿼리 테스트를 위해 titles, departments 쿼리만 추가
+- 간단한 쿼리 테스트를 위해 titles, departments 쿼리 추가
+
+- 내부 필드 객체를 리턴하는 employeeByEmpNo 쿼리 추가
+
 ```GraphQL
 schema {
     query: Query
@@ -334,19 +337,43 @@ schema {
 
 # The Root Query for the application
 type Query {
+    employees:[Employee],
+    employeeByEmpNo(empNo: ID): EmployeeInfo
     titles: [Title],
     departments: [Department]
+
+}
+
+type Employee {
+    empNo:ID!
+    birthDate: String
+    firstName: String
+    lastName: String
+    gender: String
+    hireDate: String
+}
+
+type EmployeeInfo {
+    empNo:ID!
+    birthDate: String
+    firstName: String
+    lastName: String
+    gender: String
+    hireDate: String
+    title: Title!
+    salary: Salary!
+
 }
 ```
-#### GraphQLResolver 작성하기
-Title, Department 각각 GraphQLResolver를 구현한다.
+#### GraphQLResolver 작성하기(QueryResolver)
+Title, Department, EmployeeInfo 각각 GraphQLQueryResolver를 구현한다.
 
 메소드 명명 규칙에 따라 get이 붙지 않아도 <필드명>으로 우선찾은 뒤, 없는 경우 get을 붙여 get<필드명>이 있는지 확인하여 메서드를 매핑시킨다. 
 
 즉, titles(), getTitles() 둘 다 가능.
 
 `TitleQueryResolver.java`
-```
+``` java
   /**
    *  Query 스키마에 해당하는 메서드를 GraphQLQueryResolver를 상속한 클래스에 작성.
    */
@@ -367,3 +394,131 @@ Title, Department 각각 GraphQLResolver를 구현한다.
 
 }
 ```
+`DepartmentQueryResolver.java`
+``` java
+@Component
+@RequiredArgsConstructor
+public class DepartmentQueryResolver implements GraphQLQueryResolver {
+private final DepartmentMapper departmentMapper;
+
+    public List<Department> departments(){
+        System.out.println("DepartmentQueryResolver - getDepartments()");
+        return departmentMapper.selectAllDepartments();
+    }
+}
+```
+`EmployeeInfoQueryResolver`
+``` java
+@Component
+@RequiredArgsConstructor
+public class EmployeeInfoQueryResolver implements GraphQLQueryResolver {
+
+    private final EmployeeMapper employeeMapper;
+
+    public EmployeeInfo employeeByEmpNo(int empNo){
+        System.out.println("EmployeeInfoQueryResolver - employeeByEmpNo()");
+        Employee employee = employeeMapper.selectEmployeeByEmpNo(empNo);
+        return EmployeeInfo.builder()
+                .empNo(employee.getEmpNo())
+                .birthDate(employee.getBirthDate())
+                .firstName(employee.getFirstName())
+                .lastName(employee.getLastName())
+                .gender(employee.getGender())
+                .hireDate(employee.getHireDate())
+                .build();
+    }
+
+}
+```
+
+#### GraphQLResolver 작성하기(FieldResolver)
+EmployeeInfo 내부에는 title, salary 객체 필드가 있다.
+
+이를 가져오기 위한 FieldResolver를 작성하는데, EmployeeInfo 안에서 title을 가져오는 TitleResolver, EmployeeInfo 안에서 salary를 가져오는 SalaryResolver를 작성한다.
+
+`SalaryResolver`
+``` java
+/**
+ * Field Resolver 구현
+ * 타입 내에 또 다른 타입이 필드로 설정한 경우, 혹은 DB 쿼리 후 복잡한 계산 값이 추가로 필요한 경우 구현
+ */
+@Component
+@RequiredArgsConstructor
+public class SalaryResolver implements GraphQLResolver<EmployeeInfo> {
+
+    private final SalaryMapper salaryMapper;
+
+    public Salary salary(EmployeeInfo emp) {
+        System.out.println("Request salary for EmployeeInfo");
+        return salaryMapper.selectCurrentSalaryByEmpNo(emp.getEmpNo());
+    }
+
+}
+```
+
+`TitleResolver`
+``` java
+@Component
+@RequiredArgsConstructor
+public class TitleResolver implements GraphQLResolver<EmployeeInfo> {
+
+    private final TitleMapper titleMapper;
+
+    public Title title(EmployeeInfo emp) {
+        System.out.println("Request Title for EmployeeInfo");
+        return titleMapper.selectCurrentTitleByEmpNo(emp.getEmpNo());
+    }
+
+}
+```
+#### GraphQL Test Code 작성하기
+- 테스트용 쿼리 작성을 위해 `test`밑에 `resources`폴더 생성 : `test/resources`
+- 테스트용 쿼리 작성 : `employee.graphqls`
+
+    ```graphql
+    query {
+        employeeByEmpNo(empNo : 10001) {
+            empNo
+            birthDate
+            firstName
+            lastName
+            gender
+            hireDate
+            title {
+                title
+                fromDate
+                toDate
+            }
+            salary {
+                salary
+                fromDate
+                toDate
+            }
+        }
+    }
+    ```
+
+- 테스트 돌리기
+    - 정의된 테스트 쿼리(`employee.graphqls`)를 읽어와 graphql 요청을 전송하는 테스트 작성
+    - GraphQL Java Tools 를 사용한다면 `@SpringBootTest` 어노테이션 사용시 `RANDOM_PORT` 를 의무적으로 설정해야함.
+
+    ```java
+    @ExtendWith(SpringExtension.class) // JUnit5
+    @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+    public class EmployeeResolverTest {
+    
+        @Autowired
+        private GraphQLTestTemplate graphQLTestTemplate;
+    
+        @Test
+        void employeeInfoTest() throws IOException {
+    
+            GraphQLResponse response = graphQLTestTemplate.postForResource("employee.graphqls");
+    
+            JsonNode result = response.readTree().get("data");
+            Assertions.assertNotNull(result.asText());
+    
+        }
+    
+    }
+    ```
